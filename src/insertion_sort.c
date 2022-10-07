@@ -1,6 +1,7 @@
 #include "insertion_sort.h"
 #include "linked_list.h"
 #include <windows.h>
+#include <stdbool.h>
 
 void sort(linked_list *llPtr)
 {
@@ -22,27 +23,34 @@ void sort(linked_list *llPtr)
         if (curr_node->data < previous_node->data)
         {
             node_t *node_temp = llPtr->head;
+            bool first = true;
 
-            old_back = previous_node; //head
-            old_front = curr_node->next; //head->next->next
-            old_back->next = old_front;  //head->next = head->next->next
+            old_back = previous_node;
+            old_front = curr_node->next;
+            old_back->next = old_front;
 
-            while (node_temp != curr_node)
+            while (node_temp != curr_node->next)
             {
-
-                if (node_temp->data > curr_node->data) //head > head->next
+                if (node_temp->data > curr_node->data)
                 {
-
-                    insert_front = node_temp; //head
-                    insert_back = node_temp->next; //head->next->next
                     break;
                 }
-                node_temp = node_temp->next; 
+                first = false;
+                insert_front = node_temp;
+                insert_back = node_temp->next;
+                node_temp = node_temp->next;
             }
-
-            printf("%d, %d\n", insert_front->data, insert_back->data, llPtr->head);
-            insert_front->next = curr_node; //head->next 
-            curr_node->next = insert_back;
+            
+            if (first)
+            {
+                curr_node->next = llPtr->head;
+                llPtr->head = curr_node;
+            }
+            else
+            {
+                insert_front->next = curr_node;
+                curr_node->next = insert_back;
+            }
         }
 
         Sleep(1);
