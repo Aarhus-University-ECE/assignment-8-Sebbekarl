@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "list_queue.h"
 
 void init_queue(queue *q)
@@ -37,6 +38,7 @@ void enqueue(queue *q, int x)
 
 int dequeue(queue *q)
 {
+  assert(q->size > 0);
   if (q->size == 1)
   {
     qnode *temp = q->front;
