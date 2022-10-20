@@ -5,38 +5,38 @@
 
 void sort(linked_list *llPtr)
 {
-    node_t *curr_node = llPtr->head->next;
+    node_t *current_node = llPtr->head->next;
     node_t *previous_node = llPtr->head;
-    node_t *old_back, *old_front;
+    node_t *old_rear_node, *old_front_node;
     
 
-    while (curr_node != NULL)
+    while (current_node != NULL)
     {
-        if (curr_node->data < previous_node->data)
+        if (current_node->data < previous_node->data)
         {
-            node_t *node_temp = llPtr->head;
+            node_t *new_rear_node = llPtr->head;
 
-            old_back = previous_node;
-            old_front = curr_node->next;
-            old_back->next = old_front;
+            old_rear_node = previous_node;
+            old_front_node = current_node->next;
+            old_rear_node->next = old_front_node;
 
-            while (node_temp->next->data < curr_node->data)
+            while (new_rear_node->next->data < current_node->data)
             {
-                node_temp = node_temp->next;
+                new_rear_node = new_rear_node->next;
             }
 
-            if (node_temp == llPtr->head)
+            if (new_rear_node == llPtr->head)
             {
-                curr_node->next = llPtr->head;
-                llPtr->head = curr_node;
+                current_node->next = llPtr->head;
+                llPtr->head = current_node;
             }
             else
             {
-                curr_node->next = node_temp->next;
-                node_temp->next = curr_node;
+                current_node->next = new_rear_node->next;
+                new_rear_node->next = current_node;
             }
         }
-        previous_node = curr_node;
-        curr_node = curr_node->next;
+        previous_node = current_node;
+        current_node = current_node->next;
     }
 }
